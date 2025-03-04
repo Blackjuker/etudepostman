@@ -1,7 +1,9 @@
 pipeline{
-    agent docker {
-        image 'postman/newman'  
-        args '--entrypoint=""'
+    agent {
+        docker {
+            image 'postman/newman'  
+            args '--entrypoint=""'
+        }
     }
     stages{
         stage('Check Newman version'){
