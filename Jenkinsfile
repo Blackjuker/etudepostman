@@ -6,12 +6,14 @@ pipeline {
         }
     }
 
+    // 🔹 Correct placement of parameters
+    parameters {
+        choice(name: 'COLLECTION_NAME', choices: ['SimpleGroceryStoreAPI.postman_collection', 'AnotherCollection.postman_collection', 'ThirdCollection.postman_collection'], description: 'Sélectionnez la collection Postman à exécuter')
+    }
+
     options {
-        buildDiscarder(logRotator(numToKeepStr: '10'))
-        disableConcurrentBuilds()
-        parameters([
-            choice(name: 'COLLECTION_NAME', choices: ['SimpleGroceryStoreAPI.postman_collection', 'AnotherCollection.postman_collection', 'ThirdCollection.postman_collection'], description: 'Sélectionnez la collection Postman à exécuter')
-        ])
+        buildDiscarder(logRotator(numToKeepStr: '10')) // Conserve uniquement les 10 derniers builds
+        disableConcurrentBuilds() // Empêche plusieurs exécutions simultanées
     }
 
     stages {
