@@ -6,7 +6,7 @@ pipeline {
         }
     }
     
-    properties([
+    options([
         parameters([
             string(name: 'COLLECTION_NAME', defaultValue: 'SimpleGroceryStoreAPI.postman_collection', description: 'Nom de la collection Postman à exécuter')
         ])
