@@ -1,21 +1,32 @@
-pipeline{
+pipeline {
     agent {
         docker {
             image 'postman/newman'  
             args '--entrypoint=""'
         }
     }
-    stages{
-        stage('Check Newman version'){
-            steps{
+    
+    properties([
+        parameters([
+            string(name: 'COLLECTION_NAME', defaultValue: 'SimpleGroceryStoreAPI.postman_collection', description: 'Nom de la collection Postman à exécuter')
+        ])
+    ])
+
+    stages {
+        stage('Check Newman version') {
+            steps {
                 sh 'newman --version'
             }
         }
-        stage('Run collection test'){
-            steps{
-                sh 'newman run collections/SimpleGroceryStoreAPI.postman_collection -r cli,junit,html --reporter-html-export=newman-report.html --reporter-junit-export=newman-report.xml'
+
+        stage('Run collection test') {
+            steps {
+                script {
+                    sh "newman run collections/${COLLECTION_NAME} -r cli,junit,html --reporter-html-export=newman-report.html --reporter-junit-export=newman-report.xml"
+                }
             }
         }
+
         stage('Check Generated Files') {
             steps {
                 script {
@@ -25,8 +36,9 @@ pipeline{
             }
         }
     }
-    post{
-        always{
+
+    post {
+        always {
             junit 'newman-report.xml'
             archiveArtifacts artifacts: 'newman-report.html', allowEmptyArchive: true
         }
