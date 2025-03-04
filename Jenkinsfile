@@ -13,7 +13,7 @@ pipeline{
         }
         stage('Run collection test'){
             steps{
-                sh 'newman run collections/SimpleGroceryStoreAPI.postman_collection -r cli,junit --reporter-junit-export="newman-report.xml'
+                sh 'newman run collections/SimpleGroceryStoreAPI.postman_collection -r cli,junit --reporter-junit-export="newman-report.xml"'
             }
         }
     }
