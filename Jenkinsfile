@@ -11,5 +11,10 @@ pipeline{
                 sh 'newman --version'
             }
         }
+        stage('Run collection test'){
+            steps{
+                sh 'newman run collections/SimpleGroceryStoreAPI.postman_collection'
+            }
+        }
     }
 }
