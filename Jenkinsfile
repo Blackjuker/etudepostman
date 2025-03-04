@@ -5,12 +5,14 @@ pipeline {
             args '--entrypoint=""'
         }
     }
-    
-    properties([
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        disableConcurrentBuilds()
         parameters([
             choice(name: 'COLLECTION_NAME', choices: ['SimpleGroceryStoreAPI.postman_collection', 'AnotherCollection.postman_collection', 'ThirdCollection.postman_collection'], description: 'Sélectionnez la collection Postman à exécuter')
         ])
-    ])
+    }
 
     stages {
         stage('Check Newman version') {
